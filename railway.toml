@@ -4,6 +4,4 @@ dockerfilePath = "Dockerfile"
 
 [deploy]
 startCommand = "/entrypoint.sh"
-healthcheckPath = "/"
-healthcheckTimeout = 300
 restartPolicyType = "never"
