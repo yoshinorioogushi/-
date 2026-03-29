@@ -87,6 +87,8 @@ COPY html/ /var/www/html/
 
 WORKDIR /var/www/html
 
+RUN composer install --no-dev --no-interaction --optimize-autoloader
+
 EXPOSE 80
 
 COPY entrypoint.sh /entrypoint.sh
