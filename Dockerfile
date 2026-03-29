@@ -83,6 +83,8 @@ RUN mkdir -p /var/www/html/tmp /var/www/html/logs && \
     chmod -R 777 /var/www/html/tmp && \
     chmod -R 777 /var/www/html/logs
 
+COPY html/ /var/www/html/
+
 WORKDIR /var/www/html
 
 EXPOSE 80
