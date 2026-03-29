@@ -39,12 +39,8 @@ RUN echo 'default_charset = "UTF-8"' >> /usr/local/etc/php/conf.d/charset.ini &&
     echo 'mbstring.http_output = UTF-8' >> /usr/local/etc/php/conf.d/charset.ini && \
     echo 'mbstring.encoding_translation = On' >> /usr/local/etc/php/conf.d/charset.ini
 
-# Apacheのモジュールを有効化（MPM競合を解消）
-RUN rm -f /etc/apache2/mods-enabled/mpm_*.conf \
-          /etc/apache2/mods-enabled/mpm_*.load && \
-    ln -s /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf && \
-    ln -s /etc/apache2/mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mpm_prefork.load && \
-    a2enmod rewrite
+# Apacheのモジュールを有効化
+RUN a2enmod rewrite
 
 # Apacheの設定 - CakePHPのwebrootをドキュメントルートに設定
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/webroot|g' /etc/apache2/sites-available/000-default.conf
@@ -91,4 +87,7 @@ WORKDIR /var/www/html
 
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+CMD ["/entrypoint.sh"]
